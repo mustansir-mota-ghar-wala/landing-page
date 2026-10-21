@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import Continue from "../components/Continue";
-import TiltCard from "../components/TiltCard";
-import FeatureStage from "../components/FeatureStage";
+import { Link, useSearchParams } from "react-router-dom";
 import { photoFor } from "../components/PhotoDeck";
-import { moduleGroups, modules } from "../data";
+import { modules } from "../data";
+
+const featured = [
+  "compliance",
+  "collaboration",
+  "tasks",
+  "documents",
+  "finance",
+  "reports",
+  "alerts",
+  "dashboards",
+];
 
 const labels = {
   compliance: "Compliance",
@@ -12,14 +20,20 @@ const labels = {
   tasks: "Tasks",
   documents: "Documents",
   finance: "Finance",
-  roles: "Access",
   reports: "Reports",
   alerts: "Alerts",
-  mobile: "Mobile",
   dashboards: "Dashboards",
-  quotes: "Quotes",
-  expenses: "Expenses",
-  ai: "Ask the firm",
+};
+
+const headlines = {
+  compliance: "Never miss a filing",
+  collaboration: "Work with clients, not around them",
+  tasks: "The whole firm’s work, in one list",
+  documents: "Every file lives with the work",
+  finance: "Bill the work. Collect what’s due.",
+  reports: "See the practice without a spreadsheet",
+  alerts: "The right person hears it in time",
+  dashboards: "One firm. Four clear views.",
 };
 
 const aliases = {
@@ -29,11 +43,15 @@ const aliases = {
   workflow: "tasks",
   reminders: "alerts",
   analytics: "reports",
-  ask: "ai",
+  roles: "dashboards",
+  access: "dashboards",
+  mobile: "alerts",
+  quotes: "finance",
+  expenses: "finance",
+  ai: "reports",
 };
 
-const items = moduleGroups
-  .flatMap((group) => group.ids)
+const items = featured
   .map((id) => modules.find((item) => item.id === id))
   .filter(Boolean);
 
@@ -52,14 +70,6 @@ export default function Product() {
   useEffect(() => {
     if (!requested) return;
     setCurrent(requested);
-    const timer = window.setTimeout(() => {
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      document.getElementById("module")?.scrollIntoView({
-        behavior: reduce ? "auto" : "smooth",
-        block: "start",
-      });
-    }, 60);
-    return () => window.clearTimeout(timer);
   }, [requested]);
 
   function choose(id) {
@@ -68,41 +78,39 @@ export default function Product() {
   }
 
   return (
-    <section className="section showroom-page">
-      <div className="container">
-        <div>
-          <p className="kicker" data-reveal>Showroom</p>
-          <h1 className="display" data-reveal>Walk the modules</h1>
-          <p className="lede" data-reveal>Each tile is one part of the practice. Open it to see what it does.</p>
+    <section className="lookbook">
+      <nav className="look-rail" aria-label="Product modules">
+        {items.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            className={item.id === current ? "on" : ""}
+            onClick={() => choose(item.id)}
+          >
+            <img src={photoFor(item.id)} alt="" />
+            <span>{labels[item.id]}</span>
+          </button>
+        ))}
+      </nav>
+
+      <div className="look-stage" id="module">
+        <img src={photoFor(active.id)} alt="" />
+        <div className="look-idea" key={`idea-${active.id}`}>
+          <p className="look-idea-kicker">{labels[active.id]}</p>
+          <h1>{headlines[active.id]}</h1>
         </div>
-        <div className="exhibits">
-          {items.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              data-reveal
-              className={item.id === current ? "on" : ""}
-              onClick={() => choose(item.id)}
-            >
-              <img src={photoFor(item.id)} alt="" />
-              <span>{labels[item.id] || item.title}</span>
-            </button>
-          ))}
-        </div>
-        <TiltCard as="article" className="exhibit" id="module" key={active.id} data-reveal>
-          <img className="exhibit-photo" src={photoFor(active.id)} alt="" />
-          <div className="exhibit-copy">
-            <h2>{active.title}</h2>
-            <p>{active.summary}</p>
-            <ul className="facts">
-              {active.points.map((point) => (
-                <li key={point}>{point}</li>
-              ))}
-            </ul>
-            <FeatureStage module={active} plain />
-          </div>
-        </TiltCard>
-        <Continue to="/pricing" text="When a module fits the firm, check the plan." label="See pricing" />
+        <article className="look-card" key={active.id}>
+          <p className="look-kicker">{labels[active.id]}</p>
+          <p className="look-copy">{active.summary}</p>
+          <ul className="look-points">
+            {active.points.slice(0, 2).map((point) => (
+              <li key={point}>{point}</li>
+            ))}
+          </ul>
+          <Link className="look-cta" to="/trial">
+            Start a trial
+          </Link>
+        </article>
       </div>
     </section>
   );
