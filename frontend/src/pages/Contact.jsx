@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PageHero from "../components/PageHero";
 import { sendLead } from "../api";
 
 const empty = { name: "", email: "", phone: "", firm: "", employees: "", message: "" };
@@ -28,57 +29,75 @@ export default function Contact() {
   }
 
   return (
-    <section className="section">
+    <section className="section inner-page">
       <div className="container">
-        <div className="row g-4">
-          <div className="col-lg-5">
-            <p className="kicker" data-reveal>Book a demo</p>
-            <h1 className="display" data-reveal>Tell us about the firm</h1>
-            <p data-reveal>We save this request. It does not email anyone, and it does not open a popup over the page.</p>
-            <p className="mb-1" data-reveal><a href="tel:+919689093892">+91 96890 93892</a></p>
-            <p data-reveal><a href="mailto:sales@cadashboard.com">sales@cadashboard.com</a></p>
+        <div className="inner-split">
+          <div>
+            <PageHero
+              kicker="Book a demo"
+              title="Walk the product on"
+              accent="your own client list."
+              lede="Tell us the firm, the team size, and what the demo should cover. The request is saved here. It does not open a popup, and it does not email you an OTP."
+              chips={["Weekdays 10–7 IST", "Sales desk", "No popup forms"]}
+            />
+            <div className="fact-grid">
+              <article className="fact-card" data-reveal>
+                <small>Phone</small>
+                <strong><a href="tel:+919689093892">+91 96890 93892</a></strong>
+                <p>Sales</p>
+              </article>
+              <article className="fact-card" data-reveal>
+                <small>Email</small>
+                <strong><a href="mailto:sales@cadashboard.com">sales@cadashboard.com</a></strong>
+                <p>Demo requests</p>
+              </article>
+              <article className="fact-card" data-reveal>
+                <small>Support</small>
+                <strong><a href="mailto:support@cadashboard.com">support@cadashboard.com</a></strong>
+                <p>+91 88050 08574</p>
+              </article>
+            </div>
           </div>
-          <div className="col-lg-7">
-            {done ? (
-              <div className="preview">
-                <h2 className="h4">Saved</h2>
-                <p className="mb-0">The demo request is saved. Sales can follow up from here.</p>
-              </div>
-            ) : (
-              <form className="preview halo-form" onSubmit={submit} data-reveal>
-                <div className="row g-3">
-                  <div className="col-md-6">
-                    <label className="form-label" htmlFor="name">Name</label>
-                    <input id="name" name="name" className="form-control" value={form.name} onChange={update} required />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label" htmlFor="email">Email</label>
-                    <input id="email" name="email" type="email" className="form-control" value={form.email} onChange={update} required />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label" htmlFor="phone">Phone</label>
-                    <input id="phone" name="phone" className="form-control" value={form.phone} onChange={update} />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label" htmlFor="firm">Firm</label>
-                    <input id="firm" name="firm" className="form-control" value={form.firm} onChange={update} />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label" htmlFor="employees">People in the firm</label>
-                    <input id="employees" name="employees" type="number" min="1" className="form-control" value={form.employees} onChange={update} />
-                  </div>
-                  <div className="col-12">
-                    <label className="form-label" htmlFor="message">What should the demo cover?</label>
-                    <textarea id="message" name="message" className="form-control" rows="4" value={form.message} onChange={update} />
-                  </div>
+          {done ? (
+            <div className="preview" data-reveal>
+              <p className="cine-kicker">Request saved</p>
+              <h2 className="h4">We’ll follow from this record</h2>
+              <p className="mb-0">The demo request is stored. Sales can pick it up from here without a separate email blast.</p>
+            </div>
+          ) : (
+            <form className="preview halo-form" onSubmit={submit} data-reveal>
+              <div className="row g-3">
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="name">Name</label>
+                  <input id="name" name="name" className="form-control" value={form.name} onChange={update} required />
                 </div>
-                {error && <p className="text-danger mt-3 mb-0">{error}</p>}
-                <button className="btn-green mt-3" type="submit" disabled={busy}>
-                  {busy ? "Saving" : "Request the demo"}
-                </button>
-              </form>
-            )}
-          </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="email">Work email</label>
+                  <input id="email" name="email" type="email" className="form-control" value={form.email} onChange={update} required />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="phone">Phone</label>
+                  <input id="phone" name="phone" className="form-control" value={form.phone} onChange={update} />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="firm">Firm</label>
+                  <input id="firm" name="firm" className="form-control" value={form.firm} onChange={update} />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label" htmlFor="employees">People in the firm</label>
+                  <input id="employees" name="employees" type="number" min="1" className="form-control" value={form.employees} onChange={update} />
+                </div>
+                <div className="col-12">
+                  <label className="form-label" htmlFor="message">What should the demo cover?</label>
+                  <textarea id="message" name="message" className="form-control" rows="4" value={form.message} onChange={update} />
+                </div>
+              </div>
+              {error && <p className="text-danger mt-3 mb-0">{error}</p>}
+              <button className="cine-btn mt-3" type="submit" disabled={busy}>
+                {busy ? "Saving" : "Request the demo"} <span aria-hidden="true">→</span>
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </section>
