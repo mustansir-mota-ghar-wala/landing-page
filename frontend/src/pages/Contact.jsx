@@ -45,7 +45,7 @@ export default function Contact() {
                 <p className="mb-0">The demo request is saved. Sales can follow up from here.</p>
               </div>
             ) : (
-              <form className="preview" onSubmit={submit} data-reveal>
+              <form className="preview halo-form" onSubmit={submit} data-reveal>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label" htmlFor="name">Name</label>
