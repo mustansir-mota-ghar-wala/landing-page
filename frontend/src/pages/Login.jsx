@@ -31,7 +31,7 @@ export default function Login() {
             <Link className="btn-ghost ms-2" to="/trial">Start a trial instead</Link>
           </div>
         ) : (
-          <form className="preview" onSubmit={submit} data-reveal>
+          <form className="preview halo-form" onSubmit={submit} data-reveal>
             <div>
               <label className="form-label" htmlFor="username">Username</label>
               <input id="username" className="form-control mb-3" value={form.username} onChange={(event) => setForm({ ...form, username: event.target.value })} />
