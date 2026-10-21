@@ -34,7 +34,7 @@ export default function App() {
       delete node.dataset.ty;
     }
 
-    if (reduce) {
+    if (reduce || document.querySelector(".page-shell")) {
       listed().forEach(settle);
       return undefined;
     }
@@ -93,6 +93,7 @@ export default function App() {
       return rise;
     }
 
+    const inner = Boolean(document.querySelector(".page-shell"));
     let frame = 0;
     const update = () => {
       frame = 0;
@@ -115,8 +116,14 @@ export default function App() {
           node.style.pointerEvents = "";
           return;
         }
-        const move = motion(node);
         const left = 1 - t;
+        if (inner) {
+          node.style.opacity = String(0.35 + 0.65 * t);
+          node.style.transform = `translate3d(0, ${16 * left}px, 0)`;
+          node.style.pointerEvents = "";
+          return;
+        }
+        const move = motion(node);
         node.style.opacity = String(0.45 + 0.55 * t);
         node.style.transform = `perspective(860px) translate3d(${move.fx * left}px, ${move.fy * left}px, ${move.fz * left}px) rotateX(${move.rx * left}deg) rotateY(${move.ry * left}deg)`;
         node.style.pointerEvents = t < 0.8 ? "none" : "";
@@ -182,7 +189,7 @@ export default function App() {
           </Routes>
         )}
       </main>
-      {appPage && <Assistant />}
+      {appPage && pathname !== "/product" && <Assistant />}
     </>
   );
 }
