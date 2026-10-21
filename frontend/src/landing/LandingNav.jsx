@@ -47,7 +47,7 @@ export default function LandingNav({ theme, onToggleTheme, stars = true }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  const solid = !onHome || scrolled;
+  const solid = scrolled;
   const here = {
     home: onHome,
     features: path === "/product",
