@@ -1,6 +1,8 @@
 import { useState } from "react";
 import LandingFooter from "../landing/LandingFooter";
 import LandingNav from "../landing/LandingNav";
+import PageSpace from "../landing/PageSpace";
+import "../landing/page-theme.css";
 
 const THEME_KEY = "cad-theme";
 
@@ -27,7 +29,8 @@ export default function PageFrame({ children }) {
 
   return (
     <div className={`cine page-shell${theme === "light" ? " theme-light" : ""}`}>
-      <LandingNav theme={theme} onToggleTheme={toggleTheme} />
+      <PageSpace light={theme === "light"} />
+      <LandingNav theme={theme} onToggleTheme={toggleTheme} stars={false} />
       {children}
       <LandingFooter />
     </div>
