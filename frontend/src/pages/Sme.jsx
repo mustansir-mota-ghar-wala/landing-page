@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Continue from "../components/Continue";
+import PageHero from "../components/PageHero";
 import TiltCard from "../components/TiltCard";
 import { photoFor } from "../components/PhotoDeck";
 import { smeModules } from "../data";
@@ -10,6 +11,16 @@ const filesSeed = [
   { id: 3, label: "Draft board minutes", shared: false },
 ];
 
+const shortLabel = {
+  "sme-compliance": "Compliance",
+  "sme-collab": "Collaborate",
+  "sme-work": "Work",
+  "sme-docs": "Documents",
+  "sme-roles": "Access",
+  "sme-reports": "Reports",
+  "sme-mobile": "Mobile",
+};
+
 export default function Sme() {
   const [files, setFiles] = useState(filesSeed);
   const [current, setCurrent] = useState(smeModules[0].id);
@@ -18,24 +29,28 @@ export default function Sme() {
   const showShare = active.id === "sme-collab" || active.id === "sme-docs";
 
   return (
-    <section className="section">
+    <section className="section inner-page">
       <div className="container col-lg-9">
-        <div>
-          <p className="kicker" data-reveal>For the client</p>
-          <h1 className="display" data-reveal>What your company sees</h1>
-          <p className="lede" data-reveal>A short path. Open a step to see the page your CA would share with you.</p>
-        </div>
-        <div className="client-path" role="tablist" aria-label="Client steps">
+        <PageHero
+          kicker="For the client"
+          title="What your company"
+          accent="actually sees."
+          lede="This is the client login, not the firm workspace. Open a step to see the page your CA, CS, or advisor would share with you."
+          chips={["Company login", "Shared files", "Due dates"]}
+        />
+        <div className="step-rail" role="tablist" aria-label="Client steps">
           {smeModules.map((item, step) => (
             <button
               key={item.id}
               type="button"
               role="tab"
               data-reveal
+              aria-selected={item.id === current}
               className={item.id === current ? "on" : ""}
               onClick={() => setCurrent(item.id)}
             >
-              {step + 1}
+              <i>{step + 1}</i>
+              <em>{shortLabel[item.id] || item.title}</em>
             </button>
           ))}
         </div>
@@ -84,7 +99,7 @@ export default function Sme() {
             )}
           </div>
         </TiltCard>
-        <Continue to="/" text="The firm runs this from the homepage." label="Back to the firm view" />
+        <Continue to="/" text="The firm runs the other side of this from the practice workspace." label="Back to the firm view" />
       </div>
     </section>
   );
