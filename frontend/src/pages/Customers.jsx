@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Continue from "../components/Continue";
+import PageHero from "../components/PageHero";
 import TiltCard from "../components/TiltCard";
 import { stories } from "../data";
 
@@ -8,14 +9,16 @@ export default function Customers() {
   const active = stories.find((story) => story.id === current);
 
   return (
-    <section className="section">
+    <section className="section inner-page">
       <div className="container">
-        <div>
-          <p className="kicker" data-reveal>Customers</p>
-          <h1 className="display" data-reveal>What firms said in their own words</h1>
-          <p className="lede" data-reveal>Click a name to read their note.</p>
-        </div>
-        <div className="d-flex flex-wrap gap-2 my-4">
+        <PageHero
+          kicker="Customers"
+          title="What firms said,"
+          accent="in their own words."
+          lede="These are notes from practices already running compliance, tasks, and billing on CA Dashboard. Open a name to read the full line."
+          chips={["CA firms", "CS practices", "India and Dubai"]}
+        />
+        <div className="firm-row">
           {stories.map((story) => (
             <button
               key={story.id}
@@ -28,21 +31,17 @@ export default function Customers() {
             </button>
           ))}
         </div>
-        <div className="row g-4 align-items-center">
-          <div className="col-lg-5">
-            <TiltCard className="holo-frame" data-reveal>
-              <img className="page-photo" src="/features/photo-clients.jpg" alt="" />
-            </TiltCard>
-          </div>
-          <div className="col-lg-7">
-            <blockquote className="preview quote-holo mb-0" data-reveal>
-              <p className="quote">“{active.quote}”</p>
-              <footer>
-                <strong>{active.name}</strong>
-                <div className="note">{active.firm}</div>
-              </footer>
-            </blockquote>
-          </div>
+        <div className="inner-split">
+          <TiltCard className="holo-frame" data-reveal>
+            <img className="page-photo" src="/features/photo-clients.jpg" alt="" />
+          </TiltCard>
+          <blockquote className="preview quote-holo quote-panel mb-0" data-reveal>
+            <p className="quote">“{active.quote}”</p>
+            <footer>
+              <strong>{active.name}</strong>
+              <div className="note">{active.firm}</div>
+            </footer>
+          </blockquote>
         </div>
         <Continue to="/contact" text="Want the same setup for your firm?" label="Book a demo" />
       </div>
