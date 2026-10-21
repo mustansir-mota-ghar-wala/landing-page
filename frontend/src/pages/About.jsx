@@ -1,4 +1,5 @@
 import Continue from "../components/Continue";
+import TiltCard from "../components/TiltCard";
 
 export default function About() {
   return (
@@ -22,7 +23,9 @@ export default function About() {
             </div>
           </div>
           <div className="col-lg-5" data-reveal>
-            <img className="page-photo" src="/features/photo-dashboards.jpg" alt="" />
+            <TiltCard className="holo-frame">
+              <img className="page-photo" src="/features/photo-dashboards.jpg" alt="" />
+            </TiltCard>
           </div>
         </div>
         <Continue to="/customers" text="See what practices already using it said." label="Read their notes" />
