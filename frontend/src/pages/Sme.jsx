@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Continue from "../components/Continue";
+import TiltCard from "../components/TiltCard";
 import { photoFor } from "../components/PhotoDeck";
 import { smeModules } from "../data";
 
@@ -38,7 +39,7 @@ export default function Sme() {
             </button>
           ))}
         </div>
-        <article className="client-letter" key={active.id} data-reveal>
+        <TiltCard as="article" className="client-letter" key={active.id} data-reveal>
           <img className="client-banner" src={photoFor(active.id)} alt="" />
           <div className="client-body">
             <p className="note mb-1">Step {index + 1} of {smeModules.length}</p>
@@ -82,7 +83,7 @@ export default function Sme() {
               </div>
             )}
           </div>
-        </article>
+        </TiltCard>
         <Continue to="/" text="The firm runs this from the homepage." label="Back to the firm view" />
       </div>
     </section>
