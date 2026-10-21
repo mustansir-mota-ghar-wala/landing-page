@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Continue from "../components/Continue";
-import TiltCard from "../components/TiltCard";
+import PageHero from "../components/PageHero";
 import { getPlans } from "../api";
 import { billingNote, fallbackPlans, inr, matchPlan } from "../data";
 
@@ -26,13 +26,19 @@ export default function Pricing() {
   );
 
   return (
-    <section className="section price-page">
+    <section className="section inner-page price-page">
       <div className="container">
-        <div>
-          <p className="kicker" data-reveal>Pricing</p>
-          <h1 className="display" data-reveal>See which plan fits the team</h1>
-          <p className="lede" data-reveal>{note}</p>
-        </div>
+        <PageHero
+          kicker="Pricing"
+          title="Plans sized to the"
+          accent="team, not the pitch."
+          lede={`${note} Move the slider to the number of people who need a firm login. The highlighted plan is the smallest one that covers them.`}
+          chips={["Silver · 10 logins", "Gold · 20 logins", "Platinum · 50 logins"]}
+          actions={[
+            { to: "/trial", label: "Start a trial" },
+            { to: "/contact", label: "Talk to sales", ghost: true },
+          ]}
+        />
 
         <div className="price-finder" data-reveal>
           <p className="price-count">
@@ -48,6 +54,7 @@ export default function Pricing() {
               min="1"
               max="60"
               value={users}
+              onPointerDown={(event) => event.stopPropagation()}
               onChange={(event) => setUsers(Number(event.target.value))}
             />
             <div className="plan-ticks">
@@ -78,10 +85,8 @@ export default function Pricing() {
               ? item.extras
               : (item.features || []).filter((feature) => !shared.includes(feature));
             return (
-              <TiltCard
-                as="article"
+              <article
                 key={item.id}
-                data-reveal
                 className={`ticket ${item.id}${selected ? " on" : ""}`}
                 onClick={() => setUsers(item.users)}
               >
@@ -104,13 +109,13 @@ export default function Pricing() {
                   </ul>
                 )}
                 <Link
-                  className={selected ? "btn-green" : "btn-ghost"}
+                  className={selected ? "cine-btn" : "cine-btn ghost"}
                   to={`/trial?users=${item.users}`}
                   onClick={(event) => event.stopPropagation()}
                 >
                   Start a trial
                 </Link>
-              </TiltCard>
+              </article>
             );
           })}
         </div>
