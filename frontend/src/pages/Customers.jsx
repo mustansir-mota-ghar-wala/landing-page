@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Continue from "../components/Continue";
+import TiltCard from "../components/TiltCard";
 import { stories } from "../data";
 
 export default function Customers() {
@@ -29,10 +30,12 @@ export default function Customers() {
         </div>
         <div className="row g-4 align-items-center">
           <div className="col-lg-5">
-            <img className="page-photo" src="/features/photo-clients.jpg" alt="" data-reveal />
+            <TiltCard className="holo-frame" data-reveal>
+              <img className="page-photo" src="/features/photo-clients.jpg" alt="" />
+            </TiltCard>
           </div>
           <div className="col-lg-7">
-            <blockquote className="preview mb-0" data-reveal>
+            <blockquote className="preview quote-holo mb-0" data-reveal>
               <p className="quote">“{active.quote}”</p>
               <footer>
                 <strong>{active.name}</strong>
