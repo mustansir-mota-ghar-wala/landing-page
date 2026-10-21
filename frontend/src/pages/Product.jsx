@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Continue from "../components/Continue";
+import TiltCard from "../components/TiltCard";
 import FeatureStage from "../components/FeatureStage";
 import { photoFor } from "../components/PhotoDeck";
 import { moduleGroups, modules } from "../data";
@@ -88,7 +89,7 @@ export default function Product() {
             </button>
           ))}
         </div>
-        <article className="exhibit" id="module" key={active.id} data-reveal>
+        <TiltCard as="article" className="exhibit" id="module" key={active.id} data-reveal>
           <img className="exhibit-photo" src={photoFor(active.id)} alt="" />
           <div className="exhibit-copy">
             <h2>{active.title}</h2>
@@ -100,7 +101,7 @@ export default function Product() {
             </ul>
             <FeatureStage module={active} plain />
           </div>
-        </article>
+        </TiltCard>
         <Continue to="/pricing" text="When a module fits the firm, check the plan." label="See pricing" />
       </div>
     </section>
