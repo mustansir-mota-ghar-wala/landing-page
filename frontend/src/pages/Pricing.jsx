@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Continue from "../components/Continue";
+import TiltCard from "../components/TiltCard";
 import { getPlans } from "../api";
 import { billingNote, fallbackPlans, inr, matchPlan } from "../data";
 
@@ -77,7 +78,8 @@ export default function Pricing() {
               ? item.extras
               : (item.features || []).filter((feature) => !shared.includes(feature));
             return (
-              <article
+              <TiltCard
+                as="article"
                 key={item.id}
                 data-reveal
                 className={`ticket ${item.id}${selected ? " on" : ""}`}
@@ -108,7 +110,7 @@ export default function Pricing() {
                 >
                   Start a trial
                 </Link>
-              </article>
+              </TiltCard>
             );
           })}
         </div>
