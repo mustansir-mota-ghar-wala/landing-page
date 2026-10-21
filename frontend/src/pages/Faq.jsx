@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import Continue from "../components/Continue";
+import PageHero from "../components/PageHero";
 import { faqs } from "../data";
 
 export default function Faq() {
@@ -12,30 +13,34 @@ export default function Faq() {
   }, [query]);
 
   return (
-    <section className="section">
+    <section className="section inner-page">
       <div className="container col-lg-8">
-        <div>
-          <p className="kicker" data-reveal>FAQ</p>
-          <h1 className="display" data-reveal>Questions firms ask first</h1>
-        </div>
+        <PageHero
+          kicker="FAQ"
+          title="Straight answers"
+          accent="before the demo."
+          lede="Price, data ownership, trial, and who this product is for. Search if you already know the topic."
+          chips={["Plans", "Data", "Trial", "Support"]}
+        />
         <input
           data-reveal
           className="form-control my-4"
-          placeholder="Search, for example price, data, or trial"
+          placeholder="Search price, data, trial, or support"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
+          aria-label="Search questions"
         />
         {visible.length === 0 && <p>No match. Try “price” or “data”.</p>}
         {visible.map((item) => (
           <div className="faq-item" data-reveal key={item.q}>
-            <button type="button" onClick={() => setOpen(open === item.q ? "" : item.q)}>
+            <button type="button" onClick={() => setOpen(open === item.q ? "" : item.q)} aria-expanded={open === item.q}>
               <span>{item.q}</span>
               <span>{open === item.q ? "−" : "+"}</span>
             </button>
             {open === item.q && <p className="pb-3">{item.a}</p>}
           </div>
         ))}
-        <Continue to="/contact" text="Still deciding?" label="Book a demo" />
+        <Continue to="/contact" text="If the answer is not here, book a walkthrough on your own files." label="Book a demo" />
       </div>
     </section>
   );
