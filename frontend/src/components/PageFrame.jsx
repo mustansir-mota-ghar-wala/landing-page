@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import LandingFooter from "../landing/LandingFooter";
 import LandingNav from "../landing/LandingNav";
-import PageSpace from "../landing/PageSpace";
+import PageDepth from "../landing/PageDepth";
 import "../landing/page-theme.css";
 
 const THEME_KEY = "cad-theme";
@@ -15,9 +16,12 @@ function storedTheme() {
 }
 
 export default function PageFrame({ children }) {
+  const features = useLocation().pathname === "/product";
   const [theme, setTheme] = useState(storedTheme);
+  const visual = features ? "light" : theme;
 
   function toggleTheme() {
+    if (features) return;
     const next = theme === "light" ? "dark" : "light";
     setTheme(next);
     try {
@@ -28,9 +32,9 @@ export default function PageFrame({ children }) {
   }
 
   return (
-    <div className={`cine page-shell${theme === "light" ? " theme-light" : ""}`}>
-      <PageSpace light={theme === "light"} />
-      <LandingNav theme={theme} onToggleTheme={toggleTheme} stars={false} />
+    <div className={`cine page-shell${visual === "light" ? " theme-light" : ""}${features ? " lookbook-shell" : ""}`}>
+      {!features && <PageDepth />}
+      <LandingNav theme={visual} onToggleTheme={toggleTheme} stars={false} />
       {children}
       <LandingFooter />
     </div>
