@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import BrandMark from "./BrandMark";
+import HeroStars from "./HeroStars";
 
 function Play() {
   return (
@@ -25,7 +26,7 @@ function DemoLink({ to, href, onClick }) {
   return <Link className="cine-demo" to={to} onClick={onClick}>{inner}</Link>;
 }
 
-export default function LandingNav({ theme, onToggleTheme }) {
+export default function LandingNav({ theme, onToggleTheme, stars = true }) {
   const [open, setOpen] = useState(false);
   const [drop, setDrop] = useState("");
   const close = () => {
@@ -39,6 +40,14 @@ export default function LandingNav({ theme, onToggleTheme }) {
   const light = theme === "light";
   const path = useLocation().pathname;
   const onHome = path === "/";
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const solid = !onHome || scrolled;
   const here = {
     home: onHome,
     features: path === "/product",
@@ -49,7 +58,8 @@ export default function LandingNav({ theme, onToggleTheme }) {
   };
 
   return (
-    <header className="cine-nav">
+    <header className={`cine-nav${solid ? " is-scrolled" : ""}`}>
+      {stars && <HeroStars light={light} className="nav-stars" />}
       {onHome ? (
         <a className="cine-logo" href="#top" onClick={close}>
           <BrandMark />

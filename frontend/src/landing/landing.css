@@ -35,9 +35,19 @@
   display: flex; align-items: center; gap: 12px;
   min-height: 72px;
   padding: 10px 3.5vw;
-  background: rgba(7, 11, 24, 0.82);
-  backdrop-filter: blur(22px);
-  border-bottom: 1px solid rgba(186, 220, 255, 0.12);
+  background: transparent;
+  border-bottom: 0;
+}
+.nav-stars {
+  position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.cine-nav > :not(.nav-stars) { position: relative; z-index: 1; }
+.cine-nav.is-scrolled {
+  background:
+    radial-gradient(ellipse at 82% 0%, rgba(109, 94, 252, 0.22), transparent 55%),
+    rgba(7, 11, 24, 0.92);
+  border-bottom: 1px solid rgba(186, 220, 255, 0.1);
 }
 .cine-logo {
   display: flex; align-items: center; gap: 8px;
@@ -101,8 +111,8 @@
 .cine-menu svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
 
 .cine-hero {
-  position: relative; min-height: calc(100vh - 72px);
-  display: block; padding: 48px 7vw 56px; overflow: hidden;
+  position: relative; min-height: 100vh;
+  display: block; margin-top: -72px; padding: 120px 7vw 56px; overflow: hidden;
   background: #070b18 url("/landing/hero-space.jpg") right center / cover no-repeat;
 }
 .cine-hero::before {
@@ -606,7 +616,10 @@
   .cine-menu { display: inline-grid; place-items: center; }
   .cine-nav nav {
     display: none; position: absolute; top: 72px; left: 0; right: 0;
-    background: #070b18; padding: 14px 16px 18px;
+    background:
+      radial-gradient(ellipse at 80% 0%, rgba(109, 94, 252, 0.2), transparent 50%),
+      #070b18;
+    padding: 14px 16px 18px;
     border-bottom: 1px solid rgba(186, 220, 255, 0.14);
     gap: 4px;
   }
@@ -661,7 +674,11 @@
   background: #122033; color: #f4f7ff; border-color: #122033;
   box-shadow: 0 6px 16px rgba(18, 32, 70, 0.22);
 }
-.cine.theme-light .cine-nav { background: rgba(255,255,255,0.94); border-bottom: 1px solid #e6edf6; }
+.cine.theme-light .cine-nav { background: transparent; border-bottom: 0; }
+.cine.theme-light .cine-nav.is-scrolled {
+  background: rgba(244, 247, 252, 0.9);
+  border-bottom: 1px solid #e6edf6;
+}
 .cine.theme-light .cine-logo { color: #122033; }
 .cine.theme-light .cine-nav nav a,
 .cine.theme-light .cine-nav summary,
