@@ -74,7 +74,7 @@ export default function Trial() {
             <p className="note mb-0">Nothing was emailed. A production trial would send the login from here.</p>
           </div>
         ) : step === 1 ? (
-          <form className="preview" onSubmit={next} data-reveal>
+          <form className="preview halo-form" onSubmit={next} data-reveal>
             <div>
               <label className="form-label" htmlFor="firm">Firm name</label>
               <input id="firm" name="firm" className="form-control mb-3" value={form.firm} onChange={update} />
@@ -91,7 +91,7 @@ export default function Trial() {
             <button className="btn-green" type="submit">Continue</button>
           </form>
         ) : (
-          <form className="preview" onSubmit={submit} data-reveal>
+          <form className="preview halo-form" onSubmit={submit} data-reveal>
             <div>
               <label className="form-label" htmlFor="name">Your name</label>
               <input id="name" name="name" className="form-control mb-3" value={form.name} onChange={update} />
